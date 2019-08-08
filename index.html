@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>SDGs- data test</title>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="style.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+   integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+   crossorigin=""/>
+
+   <style>
+   	#loadinggif{
+	  position: fixed;
+	  z-index: 9000;
+	  top: 0;
+	  left: 0;
+	  width: 100vw;
+	  height: 100vh;
+	  background: rgba(0,0,0,.4);
+	  text-align: center;
+	  padding-top: 45vh;
+	  display: none;
+	}
+	#loadinggif img{
+		width: 50px;
+	}
+   </style>
+  </head>
+
+  <body>
+
+  	<div id="loadinggif"><img src="http://fr.ethicon.com/sites/all/themes/ethicon/img/ajax-loader.gif"></div>
+
+  	<!-- HEADER -->
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+      <h3 class="my-0 mr-md-auto font-weight-bold">Indonesia - Project actvity report from IATI</h3>
+    </div>
+    <!-- END HEADER -->
+
+
+    <!-- START Page Content -->
+    <div class="container-fluid" id='maincontainer'>
+    	<div class="row">
+
+        	<!-- CENTER PANEL -->
+
+        	<div class="col-12">
+    			<div class="col-md-12 apanel">
+	    			<div class="row">
+	    			<div class="row blockrow">
+	    				<div class="col-md-12" style="text-align: left;">
+	    					<p class="pmap">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+	    					</p>
+	    				</div>
+		            </div>
+	    		</div>
+	    		<div class="col-md-12 apanel">
+	    			<div class="row">
+	    				<div class="col-md-12">
+	    					<div id='regions_div'></div>
+	    				</div>
+	    			</div>
+	    		</div>
+	    		<div class="col-md-12 apanel">
+	    			<div class="row">
+	    				<div class="col-md-6" style="margin-top: 3rem">
+    						<div class="col-md-12">
+			    				<div class="col-md-12 paneltitle">
+				    				<font class="panelTitleLight">Type of &nbsp;</font><font class="panelTitleBold">Status</font>
+				    			</div>
+				    			<div id="pieOrg"></div>
+				    		</div>
+				    		<div class="col-md-12">
+			    				<div class="col-md-12 paneltitle">
+				    				<font class="panelTitleLight">Activity &nbsp;</font><font class="panelTitleBold">Sector</font>
+				    			</div>
+				    			<div id="barSector"></div>
+				    		</div>
+				    	</div>
+			    		<div class="col-md-6" style="margin-top: 3rem">
+		    				<div class="col-md-12 paneltitle">
+			    				<font class="panelTitleLight">Type of &nbsp;</font><font class="panelTitleBold">Organizations</font>
+			    			</div>
+			    			<div id="barSect"></div>
+			    		</div>
+	    			</div>
+	    		</div>
+	    	</div>
+
+    	</div>
+    </div>
+    <!-- END Page Content -->
+    <br/><br/>
+
+
+    <!-- JAVASCRIPT LIBRARY -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script type="text/javascript" src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+    <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+   integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+   crossorigin=""></script>
+
+   
+    <script type="text/javascript">
+    	$(document).ready(function(){
+
+    		// INITIAL VARIABLE
+    		var thedata,
+    			theDataTableInit = 0,
+    			human_number = d3.format(",d"),
+    			statesData = 0,
+    			aid = [],
+				country_code = [],
+				day_end = [],
+				statusCount = [],
+				day_start = [],
+				description = [],
+				funder_ref = [],
+				location_latitude = [],
+				location_longitude = [],
+				location_name = [],
+				reportingCount = [],
+				reporting_ref = [],
+				sector_code = [],
+				sector_groupCount = [],
+				status_code = [],
+				activity_url = [],
+				reptotal = 0,
+				zero = 0;
+
+    		// INITIAL VARIABLE
+
+
+    		function f_drawBarRep(){
+	    		var thedata = [];
+	    		var jumproj = 0;
+	    		reportingCount.forEach(function(d){
+	    			if(thedata[d['reporting']]){
+	    				thedata[d['reporting']] +=1;
+	    			}else{
+	    				thedata[d['reporting']] = 1;
+	    			}
+	    			jumproj+=1;
+	    		})
+	    		var newdata = [];
+	    		var numorg = 0;
+	    		for(x in thedata){
+	    			newdata.push([x,thedata[x]])
+	    			numorg+=1;
+	    		}
+	    		console.log(numorg,jumproj);
+	    		newdata.sort(function(a,b){
+	    			if(a[1] > b[1] ){
+	    				return -1;
+	    			}else{
+	    				return 1;
+	    			}
+	    		})
+	    		newdata.unshift(['Type reporting', 'Total']);
+	    		// console.log(newdata);
+
+	    		google.charts.load('current', {packages: ['corechart', 'bar']});
+				google.charts.setOnLoadCallback(drawBasic);
+
+				function drawBasic() {
+
+				      var data = google.visualization.arrayToDataTable(newdata);
+
+				      var options = {
+				      	colors:['#1A89B6'],
+				      	height:970,
+				        chartArea: {width: '40%',top:5,right:3 ,bottom:40},
+				        legend: 'none',
+				        
+				        hAxis: {
+				          title: 'Total Activities',
+				          minValue: 0
+				        },
+				        //vAxis: {
+				          //title: 'Sectors'
+				       //},
+				        annotations: {
+				          alwaysOutside: true,
+				          textStyle: {
+				            fontSize: 5,
+				            auraColor: 'none',
+				            color: '#555'
+				          },
+				          boxStyle: {
+				            stroke: '#ccc',
+				            strokeWidth: 1,
+				            gradient: {
+				              color1: '#f3e5f5',
+				              color2: '#f3e5f5',
+				              x1: '0%', y1: '0%',
+				              x2: '100%', y2: '100%'
+				            }
+				          }
+				        },
+				        animation:{
+					        duration: 1000,
+					        easing: 'out',
+					        startup: true
+					    },
+				      };
+
+				      var chart = new google.visualization.BarChart(document.getElementById('barSect'));
+
+				      chart.draw(data, options);
+				      google.visualization.events.addListener(chart, 'select', function() {
+						  var sel = chart.getSelection()[0].row;
+						  redrawbasesector(newdata[sel+1][0]);
+					  });
+				    }
+
+    		}
+
+    		function f_drawBarSec(){
+	    		var thedata = [];
+	    		sector_groupCount.forEach(function(d){
+	    			if(thedata[d['sector_group']]){
+	    				thedata[d['sector_group']] +=1;
+	    			}else{
+	    				thedata[d['sector_group']] = 1;
+	    			}
+	    		})
+	    		var newdata2 = [];
+	    		for(x in thedata){
+	    			newdata2.push([x,thedata[x]])
+	    		}
+	    		newdata2.sort(function(a,b){
+	    			if(a[1] > b[1] ){
+	    				return -1;
+	    			}else{
+	    				return 1;
+	    			}
+	    		})
+	    		newdata2.unshift(['Sector Type', 'Total']);
+	    		console.log(newdata2);
+
+	    		google.charts.load('current', {packages: ['corechart', 'bar']});
+				google.charts.setOnLoadCallback(drawBasic);
+
+				function drawBasic() {
+
+				      var data = google.visualization.arrayToDataTable(newdata2);
+
+				      var options = {
+				      	colors:['#1A89B6'],
+				      	height:700,
+				        chartArea: {width: '40%',top:5,right:3 ,bottom:40},
+				        legend: 'none',
+				        
+				        hAxis: {
+				          title: 'Total Activities',
+				          minValue: 0
+				        },
+				        //vAxis: {
+				          //title: 'Sectors'
+				       //},
+				        annotations: {
+				          alwaysOutside: true,
+				          textStyle: {
+				            fontSize: 6,
+				            auraColor: 'none',
+				            color: '#555'
+				          },
+				        },
+				        animation:{
+					        duration: 1000,
+					        easing: 'out',
+					        startup: true
+					    },
+				      };
+
+				      var chart = new google.visualization.BarChart(document.getElementById('barSector'));
+
+				      chart.draw(data, options);
+				      google.visualization.events.addListener(chart, 'select', function() {
+						  var sel = chart.getSelection()[0].row;
+						  redrawbasesector(newdata2[sel+1][0]);
+					  });
+				    }
+
+    		}
+
+    		function f_drawPieOrg(){
+	    		var thedata = [];
+	    		statusCount.forEach(function(d){
+	    			if(thedata[d['status']]){
+	    				thedata[d['status']] +=1;
+	    			}else{
+	    				thedata[d['status']] = 1;
+	    			}
+	    		})
+	    		var newdata1 = [];
+	    		for(x in thedata){
+	    			newdata1.push([x,thedata[x]])
+	    		}
+	    		newdata1.sort(function(a,b){
+	    			if(a[1] > b[1] ){
+	    				return -1;
+	    			}else{
+	    				return 1;
+	    			}
+	    		})
+	    		newdata1.unshift(['Project Status', 'Total']);
+	    		// console.log(newdata1);
+
+
+	    		// Load google charts
+				google.charts.load('current', {'packages':['corechart']});
+				google.charts.setOnLoadCallback(drawChart);
+
+				function drawBasic() {
+
+				      var data = google.visualization.arrayToDataTable(newdata1);
+
+				      var options = {
+				      	height:350,
+				        chartArea: {width: '85%',top:5,right:3 ,bottom:40},
+				        legend: 'none',
+				        
+				        hAxis: {
+				          title: 'Project Status',
+				          minValue: 0
+				        },
+				        //vAxis: {
+				          //title: 'Sectors'
+				       //},
+				        annotations: {
+				          alwaysOutside: true,
+				          textStyle: {
+				            fontSize: 5,
+				            auraColor: 'none',
+				            color: '#555'
+				          }
+				        },
+				        animation:{
+					        duration: 1000,
+					        easing: 'out',
+					        startup: true
+					    },
+				      };
+
+				      var chart = new google.visualization.BarChart(document.getElementById('barSect'));
+
+				      chart.draw(data, options);
+				      google.visualization.events.addListener(chart, 'select', function() {
+						  var sel = chart.getSelection()[0].row;
+						  redrawbasesector(thedata[sel+1][0]);
+					  });
+				    }
+
+				// Draw the chart and set the chart values
+				function drawChart() {
+				  var data = google.visualization.arrayToDataTable(newdata1);
+
+				  // Optional; add a title and set the width and height of the chart
+				  var options = {
+				  	legend: 'none',
+			        pieSliceText: 'label',
+			        pieStartAngle: 100,
+			        colors: ['#1A89B6', '#8DB5D8'],
+			        chartArea:{
+			        	left:0,
+			        	top:10,
+			        	bottom:10,
+			        	width:'100%',
+			        	height:'100%'
+			        }
+			      };
+
+				  // Display the chart inside the <div> element with id="piechart"
+				  var chart = new google.visualization.PieChart(document.getElementById('pieOrg'));
+				  chart.draw(data, options);
+				  google.visualization.events.addListener(chart, 'select', function() {
+					  var sel = chart.getSelection()[0].row;
+					  redrawbaseorg(thedata[sel+1][0]);
+				  });
+				}
+
+
+	    	}
+
+    		
+    		$('#loadinggif').show();
+
+			// var geojson;
+			var map = L.map('regions_div').setView([-2.99599765, 118.70016564535808], 5);
+			var Esri_WorldTopoMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+			// var OpenStreetMap_Mapnik = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+				minZoom: 5,
+				maxZoom: 15,
+				attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
+				// attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+			});
+			Esri_WorldTopoMap.addTo(map);
+			// OpenStreetMap_Mapnik.addTo(map);
+	    	
+    		d3.csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vTB9L4A1wEj4n6z319y5OhPUZyq7VnR561p48OHtXSssieAYSGgJdYDB5fiChF-NQulcWP7tZmmOofx/pub?output=csv',function(data){
+    			data.forEach(function(d,i){
+    				// console.log(d);
+    				L.circleMarker([d['location_latitude'],d['location_longitude']],{
+    					radius:2, //besaran linkaran
+    					className: 'circleIATI',
+    					weight:1, //tebal garis pinggir
+    					color: 'red', //warna garis pinggir
+    					fillColor: 'red', //warna dalam
+    					opacity:1, //opacity garis pinggir
+    					fillOpacity:0.8 //opacity warna dalam
+
+    				}).addTo(map).bindPopup('<b>Project</b>: '+d['sector_code']+'<br/><b>Sector Group</b>: '+d['sector_group']+'<br/><b>Reporting Agency</b>: '+d['reporting']+'<br/><b>Project Brief</b>: <a href="'+d['activity_url']+'" target="_blank">More Info</a>');
+    			})
+	    		$('#loadinggif').hide();
+	    		reportingCount = data;
+	    		statusCount = data;
+	    		sector_groupCount = data;
+				f_drawPieOrg();
+				f_drawBarRep();
+				f_drawBarSec();
+	    	})	
+	    });
+    	
+    </script>
+
+
+  </body>
+
+</html>
